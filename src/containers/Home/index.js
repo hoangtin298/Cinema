@@ -1,5 +1,6 @@
 import React from "react";
 import { Route } from "react-router";
+import Footer from "../../components/Footer";
 import TopBarHome from "../../components/TopBarHome";
 
 const LayoutHome = (props) => {
@@ -7,6 +8,7 @@ const LayoutHome = (props) => {
     <>
       <TopBarHome />
       {props.children}
+      <Footer />
     </>
   );
 };

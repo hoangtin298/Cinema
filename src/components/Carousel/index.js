@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -8,10 +8,9 @@ import "swiper/components/navigation/navigation.min.css";
 import "./styles.css";
 // import Swiper core and required modules
 import SwiperCore, { Pagination, Navigation, Autoplay } from "swiper/core";
-import { ListItemAvatar, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import PlayVideoButton from "../../assets/Carousel/play-video.png";
-import ModalVideo from "react-modal-video";
-import "react-modal-video/css/modal-video.min.css";
+
 // install Swiper modules
 SwiperCore.use([Pagination, Navigation, Autoplay]);
 
