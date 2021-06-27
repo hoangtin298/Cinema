@@ -24,11 +24,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "repeat",
 
     padding: "120px 0 80px 0",
+    [theme.breakpoints.down("sm")]: {
+      padding: "10px 0 0 0 ",
+    },
   },
   bannerLeft: {
     paddingTop: "60px !important",
     "& p": {
       color: "#fff",
+    },
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center",
     },
   },
 
@@ -36,11 +42,23 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "xx-large",
     fontWeight: 700,
     marginBottom: "6px",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "24px",
+      fontWeight: 600,
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "21px",
+      fontWeight: 600,
+    },
   },
   textLeftSmall: {
     fontSize: "medium",
     fontWeight: 500,
     marginBottom: "6px",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "14px",
+      margin: "2px",
+    },
   },
   textAppUnder: {
     margin: "12px 0",
@@ -50,6 +68,9 @@ const useStyles = makeStyles((theme) => ({
 
     "& a": {
       color: "#fff",
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "13px",
     },
   },
   buttonLeft: {
@@ -68,6 +89,9 @@ const useStyles = makeStyles((theme) => ({
   bannerRight: {
     position: "relative",
     padding: "0 !important",
+    [theme.breakpoints.down("sm")]: {
+      marginBottom: "60px",
+    },
   },
   imgPhone: {
     position: "relative",
@@ -79,6 +103,29 @@ const useStyles = makeStyles((theme) => ({
     border: "0",
     width: "100%",
   },
+  swiperPhone: {
+    position: "absolute",
+    display: "block",
+    top: 0,
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: "41.6%",
+    padding: "1.5% 0",
+    borderRadius: "30px",
+  },
+  swiperSlidePhone: {
+    position: "relative",
+    display: "block",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    margin: 0,
+    padding: 0,
+    width: "100%",
+    "& img": {
+      display: "block",
+      width: "100%",
+    },
+  },
 }));
 
 function Banner(props) {
@@ -86,8 +133,8 @@ function Banner(props) {
   return (
     <section className={classes.root}>
       <Container maxWidth="md">
-        <Grid container spacing={4}>
-          <Grid item md={6} className={classes.bannerLeft}>
+        <Grid container spacing={4} justify="center">
+          <Grid item md={6} sm={12} className={classes.bannerLeft}>
             <Typography component="p" className={classes.textLeftLarge}>
               Ứng dụng tiện lợi dành cho
             </Typography>
@@ -145,41 +192,12 @@ function Banner(props) {
               autoplay={{
                 delay: "3000",
               }}
-              style={{
-                position: "absolute",
-                display: "block",
-                top: 0,
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "41.6%",
-                padding: "1.5% 0",
-                borderRadius: "30px",
-              }}
+              className={classes.swiperPhone}
             >
               {data.map((item, index) => {
                 return (
-                  <SwiperSlide
-                    key={index}
-                    style={{
-                      position: "relative",
-                      display: "block",
-                      overflow: "hidden",
-                      whiteSpace: "nowrap",
-                      margin: 0,
-                      padding: 0,
-                      borderRadius: "0",
-                      width: "100%",
-                    }}
-                    className={classes.rightItem}
-                  >
-                    <img
-                      style={{
-                        display: "block",
-                        width: "100%",
-                      }}
-                      alt={item}
-                      src={item}
-                    />
+                  <SwiperSlide key={index} className={classes.swiperSlidePhone}>
+                    <img alt={item} src={item} />
                   </SwiperSlide>
                 );
               })}

@@ -133,6 +133,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       padding: "0 20px",
     },
+    [theme.breakpoints.down("xs")]: {
+      padding: "0 ",
+    },
   },
   imgFooterBox: {
     textAlign: "center",
