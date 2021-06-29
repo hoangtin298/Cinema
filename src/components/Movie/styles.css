@@ -35,33 +35,10 @@
   margin-right: auto;
 }
 
-/* Custom Carousel */
-
-#carousel .swiper-button-prev {
-  color: #c2bfae;
-  opacity: 0.5;
-  left: 20px;
+/* Custom Movie List */
+#lichChieu .swiper-button-prev {
+  color: #fb4226;
 }
-#carousel .swiper-button-next {
-  color: #c2bfae;
-  opacity: 0.5;
-  right: 20px;
-}
-
-#carousel .swiper-pagination {
-  bottom: 13% !important;
-}
-#carousel .swiper-pagination-bullet {
-  background-color: #d8d8d8;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: none;
-  color: transparent;
-  padding: 0;
-  margin-right: 8px !important;
-  opacity: 1;
-}
-#carousel .swiper-pagination-bullet-active {
-  background-color: #fb4226;
+#lichChieu .swiper-button-next {
+  color: #fb4226;
 }

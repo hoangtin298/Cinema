@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -10,10 +10,6 @@ import "./styles.css";
 import SwiperCore, { Pagination, Navigation, Autoplay } from "swiper/core";
 import { makeStyles } from "@material-ui/core";
 import PlayVideoButton from "../../assets/Carousel/play-video.png";
-
-// Video
-import ModalVideo from "react-modal-video";
-import "react-modal-video/css/modal-video.css";
 
 // install Swiper modules
 SwiperCore.use([Pagination, Navigation, Autoplay]);
@@ -93,6 +89,7 @@ function Carousel(props) {
   return (
     <React.Fragment>
       <Swiper
+        id="carousel"
         slidesPerView={1}
         spaceBetween={0}
         speed={600}

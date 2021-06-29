@@ -1,4 +1,5 @@
 import { Button, Container, makeStyles } from "@material-ui/core";
+import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Tabs from "@material-ui/core/Tabs";
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       marginBottom: theme.spacing(2),
     },
-    [theme.breakpoints.down("770")]: {
+    [theme.breakpoints.down("xs")]: {
       marginBottom: theme.spacing(1),
     },
   },
@@ -49,12 +50,17 @@ const useStyles = makeStyles((theme) => ({
 
   tabs: {
     marginBottom: "20px",
-
     paddingTop: "120px",
 
     background: `url(${BackNewsImg})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: "80px",
+    },
+    [theme.breakpoints.down("xs")]: {
+      paddingTop: "60px",
+    },
   },
   tab: {
     fontSize: "18px",
@@ -67,14 +73,13 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       fontSize: "20px",
     },
-
     [theme.breakpoints.down("sm")]: {
       fontSize: "16px",
       "&:hover": {
         fontSize: "18px",
       },
     },
-    [theme.breakpoints.down("770")]: {
+    [theme.breakpoints.down("xs")]: {
       fontSize: "14px",
       "&:hover": {
         fontSize: "16px",
@@ -83,6 +88,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -90,8 +101,7 @@ function TabPanel(props) {
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`simple-tabpanel-news-${index}`}
       {...other}
     >
       {value === index && <div>{children}</div>}
@@ -108,6 +118,7 @@ function TabPanel(props) {
 export default function News() {
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [newsDienAnh, setNewsDienAnh] = useState(null);
   const [newsReview, setNewsReview] = useState(null);
   const [newsKhuyenMai, setNewsKhuyenMai] = useState(null);
@@ -125,14 +136,31 @@ export default function News() {
     onClickDienAnh();
   }, []);
 
+  const setStateCallBack = (setState, state, callback) => {
+    setState(state);
+    callback();
+  };
+
   const callAxios = (url, setState, boolSeeMore) => {
+    if (boolSeeMore) {
+      setLoadingMore(true);
+    } else {
+      setLoading(true);
+    }
     return axios({
       url,
       method: "GET",
     })
       .then((result) => {
-        setSeeMore(boolSeeMore);
-        setState(result.data);
+        setStateCallBack(setSeeMore, boolSeeMore, () => {
+          setStateCallBack(setState, result.data, () => {
+            if (boolSeeMore) {
+              setStateCallBack(setLoadingMore, false, () => {});
+            } else {
+              setStateCallBack(setLoading, false, () => {});
+            }
+          });
+        });
       })
       .catch((error) => console.log(error));
   };
@@ -161,6 +189,10 @@ export default function News() {
     );
   };
 
+  const onClickSeeLess = () => {
+    setSeeMore(false);
+  };
+
   const onClickSeeMore = () => {
     switch (value) {
       case 0:
@@ -183,18 +215,15 @@ export default function News() {
           setNewsKhuyenMaiMore,
           true
         );
+        break;
       default:
         break;
     }
   };
 
-  const onClickSeeLess = () => {
-    setSeeMore(false);
-  };
-
   return (
-    <section>
-      <Container component="div" maxWidth="md" id="tinTuc">
+    <section id="tinTuc">
+      <Container component="div" maxWidth="md">
         <Tabs
           value={value}
           onChange={handleChange}
@@ -216,16 +245,29 @@ export default function News() {
           />
         </Tabs>
         <TabPanel value={value} index={0}>
-          {newsDienAnh && <NewsItem newsArr={newsDienAnh} />}
-          {seeMore && newsDienAnhMore && <NewsItem newsArr={newsDienAnhMore} />}
+          {loading ? <NewsItem loading={loading} /> : null}
+          {newsDienAnh && !loading && <NewsItem newsArr={newsDienAnh} />}
+
+          {loadingMore ? <NewsItem loading={loadingMore} /> : null}
+          {seeMore && newsDienAnhMore && !loadingMore && (
+            <NewsItem newsArr={newsDienAnhMore} />
+          )}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {newsReview && <NewsItem newsArr={newsReview} />}
-          {seeMore && newsReviewMore && <NewsItem newsArr={newsReviewMore} />}
+          {loading ? <NewsItem loading={loading} /> : null}
+          {newsReview && !loading && <NewsItem newsArr={newsReview} />}
+
+          {loadingMore ? <NewsItem loading={loadingMore} /> : null}
+          {seeMore && newsReviewMore && !loadingMore && (
+            <NewsItem newsArr={newsReviewMore} />
+          )}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          {newsKhuyenMai && <NewsItem newsArr={newsKhuyenMai} />}
-          {seeMore && newsKhuyenMaiMore && (
+          {loading ? <NewsItem loading={loading} /> : null}
+          {newsKhuyenMai && !loading && <NewsItem newsArr={newsKhuyenMai} />}
+
+          {loadingMore ? <NewsItem loading={loadingMore} /> : null}
+          {seeMore && !loadingMore && newsKhuyenMaiMore && (
             <NewsItem newsArr={newsKhuyenMaiMore} />
           )}
         </TabPanel>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -43,8 +43,12 @@ export default function TopBarHome() {
     setOpen(true);
   };
 
+  useEffect(() => {
+    setOpen(false);
+  }, [isMatch]);
+
   return (
-    <header className={classes.root}>
+    <header id="headerHome" className={classes.root}>
       <AppBar color="transparent" position="fixed">
         <Toolbar className={classes.toolBar} variant="regular">
           <TopBarHomeLeft />

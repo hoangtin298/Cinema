@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 const useStyles = makeStyles((theme) => ({
   col: {
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     marginBottom: "5px",
     fontWeight: 500,
-    [theme.breakpoints.down(770)]: {
+    [theme.breakpoints.down("xs")]: {
       fontSize: "14px",
     },
   },
@@ -57,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     height: "55px",
     marginBottom: theme.spacing(2),
 
-    [theme.breakpoints.down(770)]: {
+    [theme.breakpoints.down("xs")]: {
       fontSize: "12px",
     },
   },
@@ -68,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
     marginBottom: theme.spacing(1),
 
-    [theme.breakpoints.down(770)]: {
+    [theme.breakpoints.down("xs")]: {
       height: "42px",
       width: "42px",
     },
@@ -94,77 +95,155 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     marginBottom: "5px",
 
-    [theme.breakpoints.down(770)]: {
+    [theme.breakpoints.down("xs")]: {
       fontSize: "14px",
     },
   },
 }));
 
-export default function NewsItem(props) {
+function NewsItemLarge(props) {
   const classes = useStyles();
-  const { newsArr } = props;
+  const { info } = props;
+  return (
+    <>
+      <div className={classes.thumbnail}>
+        <a target="_blank" rel="noreferrer" href={info.url}>
+          <img className={classes.thumbnailImg} alt="poster" src={info.img} />
+        </a>
+      </div>
+      <a
+        className={classes.titleLink}
+        target="_blank"
+        rel="noreferrer"
+        href={info.url}
+      >
+        <Typography className={classes.title}>{info.title}</Typography>
+      </a>
+      <Typography className={classes.desc}>{info.text}</Typography>
+    </>
+  );
+}
+
+function NewsItemMedium(props) {
+  const classes = useStyles();
+  const { info } = props;
+  return (
+    <>
+      <div className={classes.thumbnail}>
+        <a target="_blank" rel="noreferrer" href={info.url}>
+          <img className={classes.thumbnailImg} alt="poster" src={info.img} />
+        </a>
+      </div>
+      <a
+        className={classes.titleLink}
+        target="_blank"
+        rel="noreferrer"
+        href={info.url}
+      >
+        <Typography className={classes.title}>{info.title}</Typography>
+      </a>
+      <Typography className={classes.desc}>{info.text}</Typography>
+    </>
+  );
+}
+
+function NewsItemSmall(props) {
+  const classes = useStyles();
+  const { info } = props;
+  return (
+    <>
+      <div className={classes.thumbnailSmall}>
+        <a target="_blank" rel="noreferrer" href={info.url}>
+          <img className={classes.thumbnailImg} alt="poster" src={info.img} />
+        </a>
+      </div>
+      <a
+        className={classes.titleLinkSmall}
+        target="_blank"
+        rel="noreferrer"
+        href={info.url}
+      >
+        <Typography className={classes.titleSmall}>{info.title}</Typography>
+      </a>
+    </>
+  );
+}
+
+function NewsItemLargeLoading(props) {
+  return (
+    <>
+      <Skeleton variant="rect" height={248.13} />
+      <Skeleton variant="text" height={56} />
+      <Skeleton variant="text" />
+      <Skeleton variant="text" />
+      <Skeleton variant="text" />
+    </>
+  );
+}
+function NewsItemMediumLoading(props) {
+  return (
+    <>
+      <Skeleton variant="rect" height={162.45} />
+      <Skeleton variant="text" height={56} />
+      <Skeleton variant="text" />
+      <Skeleton variant="text" />
+      <Skeleton variant="text" />
+    </>
+  );
+}
+function NewsItemSmallLoading(props) {
+  return (
+    <div
+      style={{
+        display: "flex",
+      }}
+    >
+      <Skeleton
+        variant="rect"
+        height={50}
+        width={50}
+        style={{ marginRight: "20px" }}
+      />
+      <div>
+        <Skeleton variant="text" width={180} />
+        <Skeleton variant="text" width={140} />
+      </div>
+    </div>
+  );
+}
+
+export default function NewsItem(props) {
+  const { newsArr, loading } = props;
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={6}>
-        <div className={classes.thumbnail}>
-          <a target="_blank" href={newsArr[0].url}>
-            <img
-              className={classes.thumbnailImg}
-              alt="poster"
-              src={newsArr[0].img}
-            />
-          </a>
-        </div>
-        <a className={classes.titleLink} target="_blank" href={newsArr[0].url}>
-          <Typography className={classes.title}>{newsArr[0].title}</Typography>
-        </a>
-        <Typography className={classes.desc}>{newsArr[0].text}</Typography>
+        {loading ? (
+          <NewsItemLargeLoading />
+        ) : (
+          <NewsItemLarge info={newsArr[0]} />
+        )}
       </Grid>
       <Grid item xs={12} md={6}>
-        <div className={classes.thumbnail}>
-          <a target="_blank" href={newsArr[1].url}>
-            <img
-              className={classes.thumbnailImg}
-              alt="poster"
-              src={newsArr[1].img}
-            />
-          </a>
-        </div>
-        <a className={classes.titleLink} target="_blank" href={newsArr[1].url}>
-          <Typography className={classes.title}>{newsArr[1].title}</Typography>
-        </a>
-        <Typography className={classes.desc}>{newsArr[1].text}</Typography>
+        {loading ? (
+          <NewsItemLargeLoading />
+        ) : (
+          <NewsItemLarge info={newsArr[1]} />
+        )}
       </Grid>
       <Grid item xs={12} md={4}>
-        <div className={classes.thumbnail}>
-          <a target="_blank" href={newsArr[2].url}>
-            <img
-              className={classes.thumbnailImg}
-              alt="poster"
-              src={newsArr[2].img}
-            />
-          </a>
-        </div>
-        <a className={classes.titleLink} target="_blank" href={newsArr[2].url}>
-          <Typography className={classes.title}>{newsArr[2].title}</Typography>
-        </a>
-        <Typography className={classes.desc}>{newsArr[2].text}</Typography>
+        {loading ? (
+          <NewsItemMediumLoading />
+        ) : (
+          <NewsItemMedium info={newsArr[2]} />
+        )}
       </Grid>
       <Grid item xs={12} md={4}>
-        <div className={classes.thumbnail}>
-          <a target="_blank" href={newsArr[3].url}>
-            <img
-              className={classes.thumbnailImg}
-              alt="poster"
-              src={newsArr[3].img}
-            />
-          </a>
-        </div>
-        <a className={classes.titleLink} target="_blank" href={newsArr[3].url}>
-          <Typography className={classes.title}>{newsArr[3].title}</Typography>
-        </a>
-        <Typography className={classes.desc}>{newsArr[3].text}</Typography>
+        {loading ? (
+          <NewsItemMediumLoading />
+        ) : (
+          <NewsItemMedium info={newsArr[3]} />
+        )}
       </Grid>
       <Grid
         item
@@ -176,84 +255,32 @@ export default function NewsItem(props) {
         }}
       >
         <Grid item xs={12}>
-          <div className={classes.thumbnailSmall}>
-            <a target="_blank" href={newsArr[4].url}>
-              <img
-                className={classes.thumbnailImg}
-                alt="poster"
-                src={newsArr[4].img}
-              />
-            </a>
-          </div>
-          <a
-            className={classes.titleLinkSmall}
-            target="_blank"
-            href={newsArr[4].url}
-          >
-            <Typography className={classes.titleSmall}>
-              {newsArr[4].title}
-            </Typography>
-          </a>
+          {loading ? (
+            <NewsItemSmallLoading />
+          ) : (
+            <NewsItemSmall info={newsArr[4]} />
+          )}
         </Grid>
         <Grid item xs={12}>
-          <div className={classes.thumbnailSmall}>
-            <a target="_blank" href={newsArr[5].url}>
-              <img
-                className={classes.thumbnailImg}
-                alt="poster"
-                src={newsArr[5].img}
-              />
-            </a>
-          </div>
-          <a
-            className={classes.titleLinkSmall}
-            target="_blank"
-            href={newsArr[5].url}
-          >
-            <Typography className={classes.titleSmall}>
-              {newsArr[5].title}
-            </Typography>
-          </a>
+          {loading ? (
+            <NewsItemSmallLoading />
+          ) : (
+            <NewsItemSmall info={newsArr[5]} />
+          )}
         </Grid>
         <Grid item xs={12}>
-          <div className={classes.thumbnailSmall}>
-            <a target="_blank" href={newsArr[6].url}>
-              <img
-                className={classes.thumbnailImg}
-                alt="poster"
-                src={newsArr[6].img}
-              />
-            </a>
-          </div>
-          <a
-            className={classes.titleLinkSmall}
-            target="_blank"
-            href={newsArr[6].url}
-          >
-            <Typography className={classes.titleSmall}>
-              {newsArr[6].title}
-            </Typography>
-          </a>
+          {loading ? (
+            <NewsItemSmallLoading />
+          ) : (
+            <NewsItemSmall info={newsArr[6]} />
+          )}
         </Grid>
         <Grid item xs={12}>
-          <div className={classes.thumbnailSmall}>
-            <a target="_blank" href={newsArr[7].url}>
-              <img
-                className={classes.thumbnailImg}
-                alt="poster"
-                src={newsArr[7].img}
-              />
-            </a>
-          </div>
-          <a
-            className={classes.titleLinkSmall}
-            target="_blank"
-            href={newsArr[7].url}
-          >
-            <Typography className={classes.titleSmall}>
-              {newsArr[7].title}
-            </Typography>
-          </a>
+          {loading ? (
+            <NewsItemSmallLoading />
+          ) : (
+            <NewsItemSmall info={newsArr[7]} />
+          )}
         </Grid>
       </Grid>
     </Grid>

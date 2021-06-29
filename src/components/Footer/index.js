@@ -12,7 +12,11 @@ import ZaloLogo from "../../assets/Footer/zalo-logo.png";
 import ZionLogo from "../../assets/Footer/zion-logo.jpg";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    backgroundColor: "#222",
+    padding: "20px 0",
+    color: "#949494",
+  },
   containerTop: {},
   containerLeft: {
     [theme.breakpoints.down("xs")]: {
@@ -92,9 +96,6 @@ const useStyles = makeStyles((theme) => ({
       textAlign: "center",
       [theme.breakpoints.down("sm")]: {
         marginRight: "80px",
-      },
-      [theme.breakpoints.down("770")]: {
-        marginRight: "40px",
       },
       [theme.breakpoints.down("xs")]: {
         marginRight: "0",
@@ -186,13 +187,7 @@ function Footer(props) {
   };
 
   return (
-    <footer
-      style={{
-        backgroundColor: "#222",
-        padding: "20px 0",
-        color: "#949494",
-      }}
-    >
+    <footer id="footer" className={classes.root}>
       <Container maxWidth="md">
         <Grid
           container

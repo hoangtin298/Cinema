@@ -131,7 +131,7 @@ const useStyles = makeStyles((theme) => ({
 function Banner(props) {
   const classes = useStyles();
   return (
-    <section className={classes.root}>
+    <section id="ungDung" className={classes.root}>
       <Container maxWidth="md">
         <Grid container spacing={4} justify="center">
           <Grid item md={6} sm={12} className={classes.bannerLeft}>
