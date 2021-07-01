@@ -1,19 +1,17 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
+import React, { useState } from "react";
 import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core";
-import moment from "moment";
 import { Link } from "react-router-dom";
 import defaultImg from "../../../assets/default-film.webp";
 import PlayVideoImg from "../../../assets/MovieHome/play-video.png";
 import StarIcon from "@material-ui/icons/Star";
 import StarHalfIcon from "@material-ui/icons/StarHalf";
 
+import ModalPlayer from "../../ModalPlayer";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: "25px",
-
     "&:hover $posterHover": {
       visibility: "visible",
       opacity: 1,
@@ -21,17 +19,29 @@ const useStyles = makeStyles((theme) => ({
     "&:hover $infoName": {
       visibility: "hidden",
       opacity: 0,
+      [theme.breakpoints.down("xs")]: {
+        visibility: "visible",
+        opacity: 1,
+      },
     },
     "&:hover $infoDesc": {
       visibility: "hidden",
       opacity: 0,
+      [theme.breakpoints.down("xs")]: {
+        visibility: "visible",
+        opacity: 1,
+      },
     },
     "&:hover $infoHover": {
       visibility: "visible",
       opacity: 1,
     },
+
+    [theme.breakpoints.down("xs")]: {
+      display: "flex",
+    },
   },
-  posterLink: {},
+
   poster: {
     position: "relative",
     height: "318px",
@@ -43,6 +53,16 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "10px",
 
     borderRadius: "4px",
+
+    [theme.breakpoints.down("xs")]: {
+      height: "200px",
+      width: "144px",
+      marginBottom: 0,
+    },
+    [theme.breakpoints.down("370")]: {
+      height: "160px",
+      width: "100px",
+    },
   },
   posterHover: {
     position: "absolute",
@@ -99,6 +119,9 @@ const useStyles = makeStyles((theme) => ({
 
     textAlign: "center",
     lineHeight: "1.1",
+    [theme.breakpoints.down("370")]: {
+      display: "none",
+    },
   },
   posterPointText: {
     maxHeight: "21px",
@@ -121,6 +144,9 @@ const useStyles = makeStyles((theme) => ({
 
   info: {
     position: "relative",
+    [theme.breakpoints.down("xs")]: {
+      marginLeft: "25px",
+    },
   },
   infoName: {
     height: "42px",
@@ -141,6 +167,7 @@ const useStyles = makeStyles((theme) => ({
     visibility: "visible",
     opacity: 1,
     transition: "all .2s",
+    [theme.breakpoints.down("xs")]: {},
   },
   ageType: {
     display: "inline-block",
@@ -178,6 +205,17 @@ const useStyles = makeStyles((theme) => ({
     visibility: "visible",
     opacity: 1,
     transition: "all .2s",
+    [theme.breakpoints.down("xs")]: {
+      WebkitLineClamp: "4",
+
+      lineHeight: 1.6,
+
+      textAlign: "justify",
+    },
+    [theme.breakpoints.down("370")]: {
+      WebkitLineClamp: "3",
+      lineHeight: 1.42,
+    },
   },
   infoHover: {
     position: "absolute",
@@ -192,6 +230,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
 
     fontSize: "18px",
+    textAlign: "center",
     textDecoration: "none",
     color: theme.palette.common.white,
 
@@ -203,12 +242,27 @@ const useStyles = makeStyles((theme) => ({
       transition: "unset",
       background: theme.palette.primary.main,
     },
+
+    [theme.breakpoints.down("xs")]: {
+      top: "unset",
+      bottom: 0,
+
+      padding: "15px 10px",
+
+      visibility: "visible",
+      opacity: 1,
+    },
+    [theme.breakpoints.down("370")]: {
+      padding: " 10px",
+    },
   },
 }));
 
 function MovieSingle(props) {
   const classes = useStyles();
   const { data } = props;
+
+  const [openModal, setOpenModal] = useState(false);
 
   const starFloor = Math.floor(data.danhGia / 2);
   const starHalf = data.danhGia % 2 !== 0;
@@ -235,6 +289,11 @@ function MovieSingle(props) {
 
   return (
     <div className={classes.root}>
+      <ModalPlayer
+        open={openModal}
+        trailer={data.trailer}
+        handleClose={() => setOpenModal(false)}
+      />
       <Link to="/" className={classes.posterLink}>
         <div
           className={classes.poster}
@@ -244,11 +303,8 @@ function MovieSingle(props) {
         >
           <div className={classes.posterHover}>
             <button
+              onClick={() => setOpenModal(true)}
               className={classes.posterButton}
-              onClick={(e) => {
-                e.preventDefault();
-                console.log("Open veno");
-              }}
             >
               <img
                 src={PlayVideoImg}
@@ -270,14 +326,17 @@ function MovieSingle(props) {
         <div className={classes.infoName}>
           <span
             className={`${classes.ageType} ${
-              data.maPhim % 2 == 0 ? classes.ageType16 : classes.ageTypeP
+              data.maPhim % 2 === 0 ? classes.ageType16 : classes.ageTypeP
             } `}
           >
-            {data.maPhim % 2 == 0 ? "C16" : "P"}
+            {data.maPhim % 2 === 0 ? "C16" : "P"}
           </span>
           {data.tenPhim}
         </div>
-        <div className={classes.infoDesc}>{data.moTa}</div>
+        <div className={classes.infoDesc}>
+          <span style={{ fontWeight: 500, color: "#fb4226" }}>Nội Dung:</span>{" "}
+          {data.moTa}
+        </div>
 
         <Link to="/" className={classes.infoHover}>
           MUA VÉ

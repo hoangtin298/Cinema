@@ -6,16 +6,15 @@ import {
   Button,
 } from "@material-ui/core";
 import React from "react";
-import BackAppImg from "../../assets/Banner/backapp.jpg";
+import BackAppImg from "../../assets/backapp.jpg";
 import MobileImg from "../../assets/Banner/mobile.png";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Autoplay } from "swiper/core";
-// Import Swiper styles
-import "swiper/swiper.min.css";
-import "./styles.css";
-import { data } from "./data";
 
-SwiperCore.use([Autoplay]);
+import Slider from "react-slick";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+import { data } from "./data";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -110,8 +109,11 @@ const useStyles = makeStyles((theme) => ({
     left: "50%",
     transform: "translateX(-50%)",
     width: "41.6%",
-    padding: "1.5% 0",
-    borderRadius: "30px",
+    marginTop: "1.5% ",
+
+    borderRadius: "20px",
+
+    overflow: "hidden",
   },
   swiperSlidePhone: {
     position: "relative",
@@ -121,6 +123,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     padding: 0,
     width: "100%",
+
     "& img": {
       display: "block",
       width: "100%",
@@ -130,6 +133,16 @@ const useStyles = makeStyles((theme) => ({
 
 function Banner(props) {
   const classes = useStyles();
+  const settings = {
+    arrows: false,
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2500,
+  };
   return (
     <section id="ungDung" className={classes.root}>
       <Container maxWidth="md">
@@ -184,24 +197,15 @@ function Banner(props) {
           <Grid item md={6} className={classes.bannerRight}>
             <img alt="mobile" src={MobileImg} className={classes.imgPhone} />
 
-            <Swiper
-              slidesPerView={1}
-              spaceBetween={0}
-              loop={true}
-              speed={600}
-              autoplay={{
-                delay: "3000",
-              }}
-              className={classes.swiperPhone}
-            >
+            <Slider {...settings} className={classes.swiperPhone}>
               {data.map((item, index) => {
                 return (
-                  <SwiperSlide key={index} className={classes.swiperSlidePhone}>
+                  <div key={index} className={classes.swiperSlidePhone}>
                     <img alt={item} src={item} />
-                  </SwiperSlide>
+                  </div>
                 );
               })}
-            </Swiper>
+            </Slider>
           </Grid>
         </Grid>
       </Container>

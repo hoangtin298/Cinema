@@ -1,37 +1,35 @@
-import React from "react";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
-import "swiper/swiper.min.css";
-import "swiper/components/pagination/pagination.min.css";
-import "swiper/components/navigation/navigation.min.css";
-import "./styles.css";
-// import Swiper core and required modules
-import SwiperCore, { Pagination, Navigation, Autoplay } from "swiper/core";
+import React, { useState } from "react";
+
 import { makeStyles } from "@material-ui/core";
 import PlayVideoButton from "../../assets/Carousel/play-video.png";
+import BackSession from "../../assets/Carousel/back-session.png";
+import NextSession from "../../assets/Carousel/next-session.png";
 
-// install Swiper modules
-SwiperCore.use([Pagination, Navigation, Autoplay]);
+import Slider from "react-slick";
+import styled from "styled-components";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+import ModalPlayer from "../ModalPlayer";
 
 const data = [
   {
     hinhAnh:
       "https://s3img.vcdn.vn/123phim/2021/04/lat-mat-48h-16177782153424.png",
     alt: "Img alt 1",
-    trailer: "kBY2k3G6LsM",
+    trailer: "https://www.youtube.com/embed/kBY2k3G6LsM",
   },
   {
     hinhAnh:
       "https://s3img.vcdn.vn/123phim/2021/04/ban-tay-diet-quy-evil-expeller-16177781815781.png",
     alt: "Img alt 2",
-    trailer: "uqJ9u7GSaYM",
+    trailer: "https://www.youtube.com/embed/8jraVtX821Q",
   },
   {
     hinhAnh:
       "https://s3img.vcdn.vn/123phim/2021/04/nguoi-nhan-ban-seobok-16177781610725.png",
     alt: "Img alt 3",
-    trailer: "JNZv1SgHv68",
+    trailer: "https://www.youtube.com/embed/HHcr8ZRY04w",
   },
 ];
 
@@ -83,48 +81,90 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Carousel(props) {
+function CarouselItem(props) {
   const classes = useStyles();
+  const { item } = props;
+
+  const [openModal, setOpenModal] = useState(false);
 
   return (
+    <div className={classes.carouselContainer}>
+      <img alt={item.alt} src={item.hinhAnh} className={classes.carouselImg} />
+      <button onClick={() => setOpenModal(true)} className={classes.playBtnBox}>
+        <img
+          className={classes.playBtnImg}
+          alt="play-video-btn"
+          src={PlayVideoButton}
+        />
+      </button>
+      <ModalPlayer
+        open={openModal}
+        handleClose={() => setOpenModal(false)}
+        trailer={item.trailer}
+      />
+    </div>
+  );
+}
+
+const StyledSlider = styled(Slider)`
+   {
+    .slick-prev {
+      left: 15px !important;
+      background-image: url(${BackSession});
+    }
+    .slick-next {
+      right: 15px !important;
+      background-image: url(${NextSession});
+    }
+    .slick-arrow {
+      background-position: center;
+      background-size: cover;
+
+      width: 50px;
+      height: 50px;
+      opacity: 0.7;
+
+      z-index: 1;
+    }
+    .slick-arrow::before {
+      content: "" !important;
+    }
+
+    //dots
+    .slick-dots {
+      bottom: 12% !important;
+    }
+    .slick-dots li {
+      margin: 0 2px !important;
+    }
+    .slick-dots .slick-active button::before {
+      color: #fb4226 !important;
+    }
+    .slick-dots li button::before {
+      color: #d8d8d8;
+      font-size: 14px;
+      opacity: 1 !important;
+    }
+  }
+`;
+
+function Carousel(props) {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+  };
+  return (
     <React.Fragment>
-      <Swiper
-        id="carousel"
-        slidesPerView={1}
-        spaceBetween={0}
-        speed={600}
-        autoplay={{
-          delay: "5000",
-        }}
-        loop={true}
-        pagination={{
-          clickable: true,
-        }}
-        tag="section"
-        navigation={true}
-        className="mySwiper"
-      >
+      <StyledSlider {...settings}>
         {data.map((item, index) => {
-          return (
-            <SwiperSlide key={item.trailer}>
-              <div className={classes.carouselContainer}>
-                <img
-                  alt={item.alt}
-                  src={item.hinhAnh}
-                  className={classes.carouselImg}
-                />
-                <button className={classes.playBtnBox}>
-                  <img
-                    className={classes.playBtnImg}
-                    alt="play-video-btn"
-                    src={PlayVideoButton}
-                  />
-                </button>
-              </div>
-            </SwiperSlide>
-          );
+          return <CarouselItem item={item} key={index} />;
         })}
-      </Swiper>
+      </StyledSlider>
     </React.Fragment>
   );
 }

@@ -2,6 +2,15 @@ import { makeStyles } from "@material-ui/core";
 import React from "react";
 import clsx from "clsx";
 import { useMediaQuery, useTheme } from "@material-ui/core";
+import {
+  Link,
+  DirectLink,
+  Element,
+  Events,
+  animateScroll as scroll,
+  scrollSpy,
+  scroller,
+} from "react-scroll";
 
 const data = [
   {
@@ -35,6 +44,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(3),
     fontSize: theme.typography.h4.fontSize,
     fontWeight: theme.typography.fontWeightMedium,
+
+    cursor: "pointer",
     transition: "all .2s",
     "&:hover": {
       color: theme.palette.primary.light,
@@ -63,7 +74,19 @@ function TopBarHomeMiddle(props) {
     <div className={center}>
       {data.map((item) => {
         return (
-          <a key={item.id} className={classes.itemCenter} href="">
+          <a
+            key={item.id}
+            className={classes.itemCenter}
+            onClick={() => {
+              scroller.scrollTo(`${item.id}`, {
+                duration: 1000,
+                delay: 0,
+                smooth: true,
+                spy: true,
+              });
+            }}
+          >
+            {" "}
             {item.name}
           </a>
         );

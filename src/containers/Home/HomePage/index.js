@@ -4,6 +4,7 @@ import Banner from "../../../components/Banner";
 import Carousel from "../../../components/Carousel";
 import News from "../../../components/News";
 import Movie from "../../../components/Movie";
+import Theater from "../../../components/Theater";
 
 function HomePage(props) {
   return (
@@ -12,6 +13,7 @@ function HomePage(props) {
         <Carousel />
       </Hidden>
       <Movie />
+      <Theater />
       <News />
       <Banner />
     </>

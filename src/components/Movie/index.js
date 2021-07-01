@@ -11,31 +11,23 @@ import MovieSingle from "./MovieSingle";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import Slider from "react-slick";
+import styled from "styled-components";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-// Import Swiper styles
-import "swiper/swiper.min.css";
-import "swiper/components/pagination/pagination.min.css";
-import "swiper/components/navigation/navigation.min.css";
-
-import "./styles.css";
-
-// import Swiper core and required modules
-import SwiperCore, { Pagination, Navigation } from "swiper/core";
-
-// install Swiper modules
-SwiperCore.use([Pagination, Navigation]);
+import BackArrow from "../../assets/MovieHome/back.png";
+import NextArrow from "../../assets/MovieHome/next.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: "75px",
-    [theme.breakpoints.down("md")]: {
-      paddingTop: "30px",
+    paddingTop: "90px",
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: "80px",
     },
-    // [theme.breakpoints.down("xs")]: {
-    //   marginBottom: "900px",
-    // },
+    [theme.breakpoints.down("xs")]: {
+      paddingTop: "20px",
+    },
   },
   tabs: {
     marginBottom: "30px",
@@ -86,6 +78,79 @@ function TabPanel(props) {
   );
 }
 
+const StyledSlider = styled(Slider)`
+   {
+    // Arrow Position //
+    .slick-prev {
+      left: -22px !important;
+    }
+    .slick-next {
+      right: -22px !important;
+    }
+    @media screen and (max-width: 992px) {
+      .slick-prev {
+        left: -15px !important;
+      }
+      .slick-next {
+        right: -15px !important;
+      }
+    }
+
+    // Box Arrow //
+    .slick-arrow {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+
+      top: 49%;
+
+      width: 40px;
+      height: 40px;
+
+      z-index: 1;
+      opacity: 1;
+
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 8%);
+
+      transition: all 0.2s;
+    }
+    .slick-arrow:hover {
+      opacity: 0.7;
+    }
+
+    // Icon Next and Prev //
+    .slick-next::before {
+      background-image: url(${NextArrow});
+    }
+    .slick-prev::before {
+      background-image: url(${BackArrow});
+    }
+    .slick-arrow::before {
+      content: "" !important;
+      background-position: center;
+      background-size: cover;
+
+      display: block;
+
+      width: 25px;
+      height: 25px;
+
+      z-index: 10;
+      opacity: 1;
+    }
+
+    // space between slides //
+    .slick-slide > div {
+      margin: 0 8px;
+    }
+    .slick-list {
+      margin: 0 -8px;
+    }
+  }
+`;
+
 function Movie(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -114,6 +179,17 @@ function Movie(props) {
     dispatch(actGetMovieListApi("01/01/2020", "31/12/2020"));
   }, []);
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    swipeToSlide: true,
+
+    adaptiveHeight: true,
+  };
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -130,11 +206,7 @@ function Movie(props) {
 
   return (
     <section id="lichChieu">
-      <Container
-        component="div"
-        style={{ maxWidth: "1100px" }}
-        className={classes.root}
-      >
+      <Container component="div" maxWidth="md" className={classes.root}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -159,61 +231,36 @@ function Movie(props) {
           />
         </Tabs>
         <TabPanel value={value} index={0}>
-          <Swiper
-            autoHeight={true}
-            slidesPerView={1}
-            spaceBetween={16}
-            loop={true}
-            pagination={{
-              clickable: true,
-            }}
-            tag="section"
-            navigation={true}
-            className="mySwiper"
-          >
+          <StyledSlider {...settings}>
             {movieList.data &&
               sliceIntoChunks(movieList.data, moviePerSlide).map(
                 (item, index) => {
-                  console.log(item);
                   return (
-                    <SwiperSlide key={index}>
-                      <Container maxWidth="md">
-                        <Grid container spacing={2}>
-                          {renderMovieList(item)}
-                        </Grid>
-                      </Container>
-                    </SwiperSlide>
-                  );
-                }
-              )}
-          </Swiper>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Swiper
-            autoHeight={true}
-            slidesPerView={1}
-            spaceBetween={16}
-            loop={true}
-            pagination={{
-              clickable: true,
-            }}
-            tag="section"
-            navigation={true}
-            className="mySwiper"
-          >
-            {movieList.data &&
-              sliceIntoChunks(movieList.data, 8).map((item, index) => {
-                return (
-                  <SwiperSlide key={index}>
-                    <Container maxWidth="md">
+                    <div key={index}>
                       <Grid container spacing={2}>
                         {renderMovieList(item)}
                       </Grid>
-                    </Container>
-                  </SwiperSlide>
-                );
-              })}
-          </Swiper>
+                    </div>
+                  );
+                }
+              )}
+          </StyledSlider>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <StyledSlider {...settings}>
+            {movieList.data &&
+              sliceIntoChunks(movieList.data, moviePerSlide).map(
+                (item, index) => {
+                  return (
+                    <div key={index}>
+                      <Grid container spacing={2}>
+                        {renderMovieList(item)}
+                      </Grid>
+                    </div>
+                  );
+                }
+              )}
+          </StyledSlider>
         </TabPanel>
       </Container>
     </section>

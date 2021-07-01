@@ -213,10 +213,10 @@ function NewsItemSmallLoading(props) {
 }
 
 export default function NewsItem(props) {
-  const { newsArr, loading } = props;
+  const { newsArr, loading, id } = props;
 
   return (
-    <Grid container spacing={2}>
+    <Grid id={id} container spacing={2}>
       <Grid item xs={12} md={6}>
         {loading ? (
           <NewsItemLargeLoading />

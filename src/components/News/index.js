@@ -6,6 +6,15 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import NewsItem from "./NewsItem";
 import BackNewsImg from "../../assets/back-news.png";
+import {
+  Link,
+  DirectLink,
+  Element,
+  Events,
+  animateScroll as scroll,
+  scrollSpy,
+  scroller,
+} from "react-scroll";
 
 const useStyles = makeStyles((theme) => ({
   wrapButtonSeeMoreNews: {
@@ -50,16 +59,22 @@ const useStyles = makeStyles((theme) => ({
 
   tabs: {
     marginBottom: "20px",
-    paddingTop: "120px",
+    paddingTop: "100px",
 
     background: `url(${BackNewsImg})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       paddingTop: "80px",
     },
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("sm")]: {
       paddingTop: "60px",
+    },
+    [theme.breakpoints.down("xs")]: {
+      paddingTop: "40px",
+    },
+    [theme.breakpoints.down("370")]: {
+      paddingTop: "20px",
     },
   },
   tab: {
@@ -109,12 +124,6 @@ function TabPanel(props) {
   );
 }
 
-// const StyledTab = withStyles({
-//   selected: {
-//     fontSize: "20px",
-//   },
-// })(Tab);
-
 export default function News() {
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
@@ -155,7 +164,15 @@ export default function News() {
         setStateCallBack(setSeeMore, boolSeeMore, () => {
           setStateCallBack(setState, result.data, () => {
             if (boolSeeMore) {
-              setStateCallBack(setLoadingMore, false, () => {});
+              setStateCallBack(setLoadingMore, false, () => {
+                scroller.scrollTo("tinTucMore", {
+                  duration: 1000,
+                  delay: 0,
+                  smooth: true,
+                  spy: true,
+                  offset: -64,
+                });
+              });
             } else {
               setStateCallBack(setLoading, false, () => {});
             }
@@ -190,6 +207,12 @@ export default function News() {
   };
 
   const onClickSeeLess = () => {
+    scroller.scrollTo("tinTuc", {
+      duration: 500,
+      delay: 0,
+      smooth: true,
+      spy: true,
+    });
     setSeeMore(false);
   };
 
@@ -250,7 +273,7 @@ export default function News() {
 
           {loadingMore ? <NewsItem loading={loadingMore} /> : null}
           {seeMore && newsDienAnhMore && !loadingMore && (
-            <NewsItem newsArr={newsDienAnhMore} />
+            <NewsItem newsArr={newsDienAnhMore} id="tinTucMore" />
           )}
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -259,7 +282,7 @@ export default function News() {
 
           {loadingMore ? <NewsItem loading={loadingMore} /> : null}
           {seeMore && newsReviewMore && !loadingMore && (
-            <NewsItem newsArr={newsReviewMore} />
+            <NewsItem newsArr={newsReviewMore} id="tinTucMore" />
           )}
         </TabPanel>
         <TabPanel value={value} index={2}>
@@ -268,7 +291,7 @@ export default function News() {
 
           {loadingMore ? <NewsItem loading={loadingMore} /> : null}
           {seeMore && !loadingMore && newsKhuyenMaiMore && (
-            <NewsItem newsArr={newsKhuyenMaiMore} />
+            <NewsItem newsArr={newsKhuyenMaiMore} id="tinTucMore" />
           )}
         </TabPanel>
 

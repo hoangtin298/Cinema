@@ -25,7 +25,13 @@ const useStyles = makeStyles((theme) => ({
     verticalAlign: "middle",
   },
   list: {
-    width: 300,
+    width: "350px",
+    [theme.breakpoints.down("xs")]: {
+      width: 280,
+    },
+    [theme.breakpoints.down("370")]: {
+      width: 250,
+    },
   },
   offset: theme.mixins.toolbar,
   toolBar: {
