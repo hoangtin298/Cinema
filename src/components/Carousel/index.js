@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-
 import { makeStyles } from "@material-ui/core";
 import PlayVideoButton from "../../assets/Carousel/play-video.png";
 import BackSession from "../../assets/Carousel/back-session.png";
 import NextSession from "../../assets/Carousel/next-session.png";
-
 import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import ModalPlayer from "../ModalPlayer";
+
+import HomeTool from "../HomeTool";
 
 const data = [
   {
@@ -34,6 +33,9 @@ const data = [
 ];
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    position: "relative",
+  },
   carouselContainer: {
     width: "100%",
     position: "relative",
@@ -149,6 +151,7 @@ const StyledSlider = styled(Slider)`
 `;
 
 function Carousel(props) {
+  const classes = useStyles();
   const settings = {
     dots: true,
     infinite: true,
@@ -159,13 +162,14 @@ function Carousel(props) {
     autoplaySpeed: 5000,
   };
   return (
-    <React.Fragment>
+    <section id="carousel" className={classes.root}>
       <StyledSlider {...settings}>
         {data.map((item, index) => {
           return <CarouselItem item={item} key={index} />;
         })}
       </StyledSlider>
-    </React.Fragment>
+      <HomeTool />
+    </section>
   );
 }
 

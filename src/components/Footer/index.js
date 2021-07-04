@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
     "& div": {
       textAlign: "center",
       [theme.breakpoints.down("sm")]: {
-        marginRight: "80px",
+        marginRight: "60px",
       },
       [theme.breakpoints.down("xs")]: {
         marginRight: "0",

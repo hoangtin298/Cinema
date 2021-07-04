@@ -10,7 +10,8 @@ import Grid from "@material-ui/core/Grid";
 import MovieSingle from "./MovieSingle";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
@@ -21,11 +22,8 @@ import NextArrow from "../../assets/MovieHome/next.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: "90px",
+    paddingTop: "60px",
     [theme.breakpoints.down("sm")]: {
-      paddingTop: "80px",
-    },
-    [theme.breakpoints.down("xs")]: {
       paddingTop: "20px",
     },
   },
@@ -56,6 +54,12 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  tabPanel: {
+    height: "882px",
+    [theme.breakpoints.down("xs")]: {
+      height: "unset",
+    },
+  },
 }));
 
 TabPanel.propTypes = {
@@ -73,7 +77,7 @@ function TabPanel(props) {
       id={`simple-tabpanel-movie-list-${index}`}
       {...other}
     >
-      {value === index && <div>{children}</div>}
+      {value === index && <Box>{children}</Box>}
     </div>
   );
 }
@@ -230,7 +234,7 @@ function Movie(props) {
             }}
           />
         </Tabs>
-        <TabPanel value={value} index={0}>
+        <TabPanel className={classes.tabPanel} value={value} index={0}>
           <StyledSlider {...settings}>
             {movieList.data &&
               sliceIntoChunks(movieList.data, moviePerSlide).map(
@@ -246,7 +250,7 @@ function Movie(props) {
               )}
           </StyledSlider>
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel className={classes.tabPanel} value={value} index={1}>
           <StyledSlider {...settings}>
             {movieList.data &&
               sliceIntoChunks(movieList.data, moviePerSlide).map(

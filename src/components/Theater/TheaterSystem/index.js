@@ -9,7 +9,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    marginTop: "30px",
+  },
 
   logoBox: {
     position: "relative",
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
       bottom: "-10px",
       left: 0,
 
-      height: "2px",
+      height: "3px",
       width: "0%",
 
       background: "linear-gradient(to left,#fb4226,#ce3017 100%)",
@@ -31,25 +33,18 @@ const useStyles = makeStyles((theme) => ({
     "&:hover:after": {
       width: "100%",
     },
+    [theme.breakpoints.down("xs")]: {
+      marginBottom: "15px",
+    },
   },
   activeBox: {
     "&:after": {
-      display: "block",
-      content: "''",
-
-      position: "absolute",
-      bottom: "-10px",
-      left: 0,
-
-      height: "2px",
       width: "100%",
-
-      background: "linear-gradient(to left,#fb4226,#ce3017 100%)",
     },
   },
   logo: {
-    width: "50px",
-    height: "50px",
+    width: "60px",
+    height: "60px",
 
     margin: "auto",
     background: "white",
@@ -62,6 +57,11 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       opacity: 1,
     },
+
+    [theme.breakpoints.down("xs")]: {
+      width: "50px",
+      height: "50px",
+    },
   },
   active: {
     opacity: 1,
@@ -71,6 +71,8 @@ const useStyles = makeStyles((theme) => ({
 function TheaterSystem(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const { valueCluster, setValueCluster } = props;
 
   const [activeLogo, setActiveLogo] = useState(0);
 
@@ -82,16 +84,17 @@ function TheaterSystem(props) {
 
   const handleOnClick = (index, maHeThongRap) => {
     setActiveLogo(index);
+    setValueCluster(0);
     dispatch(actGetTheaterClusterApi(maHeThongRap));
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" className={classes.root}>
       <Grid container spacing={2}>
         {theaterSystem.data &&
           theaterSystem.data.map((item, index) => {
             return (
-              <Grid item xs={2} key={item.maHeThongRap}>
+              <Grid item sm={2} xs={4} key={item.maHeThongRap}>
                 <div
                   className={`${classes.logoBox} ${
                     activeLogo === index ? classes.activeBox : null

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TheaterCluster from "./TheaterCluster";
 import TheaterSystem from "./TheaterSystem";
 import Container from "@material-ui/core/Container";
@@ -6,57 +6,78 @@ import { makeStyles } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 
 import BackNewsImg from "../../assets/back-news.png";
-import BackAppImg from "../../assets/backapp.jpg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // background: `url(${BackNewsImg})`,
-    // backgroundSize: "cover",
-    // backgroundRepeat: "no-repeat",
-    // paddingTop: "100px",
-    // marginBottom: "20px",
-    // [theme.breakpoints.down("md")]: {
-    //   paddingTop: "80px",
-    // },
-    // [theme.breakpoints.down("sm")]: {
-    //   paddingTop: "60px",
-    // },
-    // [theme.breakpoints.down("xs")]: {
-    //   paddingTop: "40px",
-    // },
-    // [theme.breakpoints.down("370")]: {
-    //   paddingTop: "20px",
-    // },
+    marginBottom: "20px",
+    paddingTop: "100px",
+
+    background: `url(${BackNewsImg})`,
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+    [theme.breakpoints.down("md")]: {
+      paddingTop: "80px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: "60px",
+    },
+    [theme.breakpoints.down("xs")]: {
+      paddingTop: "40px",
+    },
+    [theme.breakpoints.down("370")]: {
+      paddingTop: "20px",
+    },
   },
   title: {
-    // display: "block",
+    position: "relative",
+    display: "block",
 
+    height: "24px",
     color: theme.palette.primary.main,
     fontSize: "18px",
     fontWeight: 500,
-
-    height: "24px",
     lineHeight: "24px",
+    padding: "0 30px",
+    marginBottom: "15px",
 
     "&:after": {
-      content: "''",
       display: "block",
+      content: "''",
 
-      height: "2px",
+      position: "absolute",
+      left: "0",
+      bottom: "-15px",
       width: "100%",
-      backgroundColor: theme.palette.primary.main,
+      height: "3px",
+      background: theme.palette.primary.main,
     },
   },
 }));
 
 export default function Theater(props) {
   const classes = useStyles();
+
+  const [valueCluster, setValueCluster] = useState(0);
+
   return (
     <section id="cumRap">
       <Container maxWidth="md" className={classes.root}>
-        <span className={classes.title}>Hệ thống rạp</span>
-        <TheaterSystem />
-        <TheaterCluster />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <span className={classes.title}>Hệ Thống Rạp</span>
+        </div>
+        <TheaterSystem
+          valueCluster={valueCluster}
+          setValueCluster={setValueCluster}
+        />
+        <TheaterCluster
+          valueCluster={valueCluster}
+          setValueCluster={setValueCluster}
+        />
       </Container>
     </section>
   );
