@@ -48,8 +48,8 @@ const useStyles = makeStyles((theme) => ({
       left: "0",
       bottom: "-15px",
       width: "100%",
-      height: "3px",
-      background: theme.palette.primary.main,
+      height: "15px",
+      borderBottom: `3px solid ${theme.palette.primary.main}`,
     },
   },
 }));

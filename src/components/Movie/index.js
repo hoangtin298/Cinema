@@ -23,7 +23,7 @@ import NextArrow from "../../assets/MovieHome/next.png";
 const useStyles = makeStyles((theme) => ({
   root: {
     paddingTop: "60px",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
       paddingTop: "20px",
     },
   },

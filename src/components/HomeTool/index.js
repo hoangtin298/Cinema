@@ -94,6 +94,23 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
     margin: "0 10px",
   },
+  option: {
+    "&::-webkit-scrollbar": {
+      width: "8px",
+    },
+    "&::-webkit-scrollbar-track": {
+      borderRadius: "8px",
+      boxShadow: "inset 0 0 10px rgba(0,0,0,0.25)",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      borderRadius: "8px",
+      backgroundColor: "rgba(250, 82, 56, .6)",
+      transition: "all .4s",
+      "&:hover": {
+        backgroundColor: "rgba(250, 82, 56, .8)",
+      },
+    },
+  },
 }));
 
 export default function HomeTool() {
@@ -224,7 +241,7 @@ export default function HomeTool() {
   return (
     <Container id="homeTool" className={classes.root} maxWidth="md">
       <Grid container className={classes.homeToolContainer}>
-        <Grid item xs={4} className={classes.gridItem}>
+        <Grid item xs={3} className={classes.gridItem}>
           <div className={classes.selectFilm}>
             <FormControl className={classes.formControl}>
               <NativeSelect
@@ -278,7 +295,7 @@ export default function HomeTool() {
           </div>
         </Grid>
 
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <div className={classes.buyContainer}>
             <FormControl className={classes.formControl}>
               <Button

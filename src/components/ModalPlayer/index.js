@@ -18,13 +18,19 @@ const useStyles = makeStyles((theme) => ({
 
     boxShadow: theme.shadows[5],
 
-    width: "55%",
-    height: "55%",
+    width: "898px",
+    height: "530px",
+    [theme.breakpoints.down("md")]: {
+      width: "680px",
+      height: "420px",
+    },
     [theme.breakpoints.down("sm")]: {
-      height: "40%",
+      width: "340px",
+      height: "220px",
     },
     [theme.breakpoints.down("xs")]: {
-      height: "30%",
+      width: "280px",
+      height: "160px",
     },
   },
   closeBtn: {
