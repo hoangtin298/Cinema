@@ -241,7 +241,7 @@ export default function HomeTool() {
   return (
     <Container id="homeTool" className={classes.root} maxWidth="md">
       <Grid container className={classes.homeToolContainer}>
-        <Grid item xs={3} className={classes.gridItem}>
+        <Grid item xs={4} className={classes.gridItem}>
           <div className={classes.selectFilm}>
             <FormControl className={classes.formControl}>
               <NativeSelect
@@ -295,7 +295,7 @@ export default function HomeTool() {
           </div>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={2}>
           <div className={classes.buyContainer}>
             <FormControl className={classes.formControl}>
               <Button
@@ -304,7 +304,7 @@ export default function HomeTool() {
                 color="primary"
                 onClick={handleMuaVe}
               >
-                MUA VÉ NGAY
+                MUA VÉ
               </Button>
             </FormControl>
           </div>

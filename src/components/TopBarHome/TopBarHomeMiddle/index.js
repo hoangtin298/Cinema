@@ -83,6 +83,7 @@ function TopBarHomeMiddle(props) {
                 delay: 0,
                 smooth: true,
                 spy: true,
+                offset: isMatch ? -50 : 0,
               });
             }}
           >
