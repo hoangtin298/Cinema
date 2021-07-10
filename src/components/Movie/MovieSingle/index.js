@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import defaultImg from "../../../assets/default-film.webp";
-import PlayVideoImg from "../../../assets/MovieHome/play-video.png";
+import PlayVideoImg from "../../../assets/play-video.png";
 import StarIcon from "@material-ui/icons/Star";
 import StarHalfIcon from "@material-ui/icons/StarHalf";
 
@@ -294,7 +294,10 @@ function MovieSingle(props) {
         trailer={data.trailer}
         handleClose={() => setOpenModal(false)}
       />
-      <Link to="/" className={classes.posterLink}>
+      <Link
+        to={`/booking-detail/${data.maPhim}`}
+        className={classes.posterLink}
+      >
         <div
           className={classes.poster}
           style={{
@@ -303,7 +306,10 @@ function MovieSingle(props) {
         >
           <div className={classes.posterHover}>
             <button
-              onClick={() => setOpenModal(true)}
+              onClick={(event) => {
+                event.preventDefault();
+                setOpenModal(true);
+              }}
               className={classes.posterButton}
             >
               <img
@@ -338,7 +344,10 @@ function MovieSingle(props) {
           {data.moTa}
         </div>
 
-        <Link to="/" className={classes.infoHover}>
+        <Link
+          to={`/booking-detail/${data.maPhim}`}
+          className={classes.infoHover}
+        >
           MUA VÉ
         </Link>
       </div>

@@ -6,7 +6,7 @@ import {
   Button,
 } from "@material-ui/core";
 import React from "react";
-import BackAppImg from "../../assets/backapp.jpg";
+import BackAppImg from "../../assets/Banner/backapp.jpg";
 import MobileImg from "../../assets/Banner/mobile.png";
 
 import Slider from "react-slick";
