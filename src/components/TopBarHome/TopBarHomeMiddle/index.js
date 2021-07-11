@@ -11,6 +11,7 @@ import {
   scrollSpy,
   scroller,
 } from "react-scroll";
+import { useHistory, useLocation } from "react-router-dom";
 
 const data = [
   {
@@ -62,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
 
 function TopBarHomeMiddle(props) {
   const classes = useStyles();
+  const location = useLocation();
+  const history = useHistory();
+
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -70,6 +74,35 @@ function TopBarHomeMiddle(props) {
     [classes.centerMobile]: isMatch,
   });
 
+  const historyCallback = (callback) => {
+    history.push("/");
+    setTimeout(function () {
+      callback();
+    }, 1000);
+  };
+
+  const handleClick = (id) => {
+    if (location.pathname !== "/") {
+      historyCallback(() => {
+        scroller.scrollTo(`${id}`, {
+          duration: 1000,
+          delay: 0,
+          smooth: true,
+          spy: true,
+          offset: isMatch ? -50 : 0,
+        });
+      });
+      return;
+    }
+    scroller.scrollTo(`${id}`, {
+      duration: 1000,
+      delay: 0,
+      smooth: true,
+      spy: true,
+      offset: isMatch ? -50 : 0,
+    });
+  };
+
   return (
     <div className={center}>
       {data.map((item) => {
@@ -77,17 +110,8 @@ function TopBarHomeMiddle(props) {
           <a
             key={item.id}
             className={classes.itemCenter}
-            onClick={() => {
-              scroller.scrollTo(`${item.id}`, {
-                duration: 1000,
-                delay: 0,
-                smooth: true,
-                spy: true,
-                offset: isMatch ? -50 : 0,
-              });
-            }}
+            onClick={() => handleClick(item.id)}
           >
-            {" "}
             {item.name}
           </a>
         );

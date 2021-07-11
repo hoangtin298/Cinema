@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import Logo from "../../../assets/LogoHeader/web-logo.png";
 import {
   DirectLink,
@@ -26,11 +26,25 @@ const useStyles = makeStyles((theme) => ({
 
 function TopBarHomeLeft(props) {
   const classes = useStyles();
+  const location = useLocation();
+  const history = useHistory();
+
+  const historyCallback = (callback) => {
+    history.push("/");
+    callback();
+  };
+
   return (
     <>
       <a
         className={classes.logoLink}
         onClick={() => {
+          if (location.pathname !== "/") {
+            historyCallback(() => {
+              scroll.scrollToTop();
+            });
+            return;
+          }
           scroll.scrollToTop();
         }}
       >

@@ -13,6 +13,8 @@ import ModalPlayer from "../../../components/ModalPlayer";
 import moment from "moment";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
+import StarIcon from "@material-ui/icons/Star";
+import StarHalfIcon from "@material-ui/icons/StarHalf";
 
 const useStyles = makeStyles((theme) => ({
   //   TOP
@@ -54,12 +56,13 @@ const useStyles = makeStyles((theme) => ({
   posterMain: {
     position: "relative",
 
-    backgroundSize: "100% auto !important",
-    backgroundRepeat: "no-repeat,repeat-y !important",
-    backgroundPosition: "center,0 0 !important",
+    backgroundSize: "cover !important",
+    backgroundRepeat: "no-repeat !important",
+    backgroundPosition: "center center !important",
 
     borderRadius: "4px",
     paddingTop: "147.90697674%",
+
     "&:hover $playerButton": {
       visibility: "visible",
       opacity: 1,
@@ -88,6 +91,9 @@ const useStyles = makeStyles((theme) => ({
     color: "#e9e9e9",
     lineHeight: 1.5,
     padding: "0 20px",
+
+    width: "360px",
+    minWidth: "360px",
   },
   movieDate: {
     lineHeight: 1.5,
@@ -125,6 +131,53 @@ const useStyles = makeStyles((theme) => ({
     padding: "7px 25px",
     margin: "25px 0 20px 0",
   },
+
+  // Danh gia
+  circleBox: {
+    position: "relative",
+    fontSize: "126px",
+
+    width: "1em",
+    height: "1em",
+    margin: "auto",
+
+    backgroundColor: "rgba(0,0,0,.4)",
+    borderRadius: "50%",
+  },
+  circleFull: {
+    position: "absolute",
+    color: "#3a3a3a",
+
+    width: "1em !important",
+    height: "1em !important",
+  },
+  circlePercent: {
+    position: "absolute",
+
+    width: "1em !important",
+    height: "1em !important",
+  },
+  textPercent: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%,-50%)",
+
+    fontSize: "50px",
+    color: theme.palette.common.white,
+  },
+
+  // Stars
+  starMain: {
+    display: "flex",
+    justifyContent: "center",
+
+    marginTop: "10px",
+  },
+  starSingle: {
+    display: "inline-block",
+    maxWidth: "25px",
+  },
 }));
 
 function BookingDetail(props) {
@@ -149,6 +202,24 @@ function BookingDetail(props) {
 
   console.log("chiTietPhim", chiTietPhim);
 
+  const starFloor = Math.floor(chiTietPhim?.danhGia / 2);
+  const starHalf = chiTietPhim?.danhGia % 2 !== 0;
+
+  const renderStar = () => {
+    const setStar = [];
+    for (let index = 0; index < starFloor; index++) {
+      setStar.push(<StarIcon color="primary" className={classes.starSingle} />);
+    }
+    if (starHalf) {
+      setStar.push(
+        <StarHalfIcon color="primary" className={classes.starSingle} />
+      );
+    }
+    return setStar.map((item, index) => {
+      return <span key={index}>{item}</span>;
+    });
+  };
+
   return (
     <section>
       {chiTietPhim ? (
@@ -167,7 +238,7 @@ function BookingDetail(props) {
           </div>
           <div className={classes.styleGradient}></div>
           <Container maxWidth="md" className={classes.detailMainInfo}>
-            <Grid container>
+            <Grid container alignItems="center">
               <Grid xs={3} item>
                 <Box
                   style={{
@@ -186,7 +257,7 @@ function BookingDetail(props) {
                   </button>
                 </Box>
               </Grid>
-              <Grid xs={5} item container alignItems="center">
+              <Grid xs={7} item>
                 <Box className={classes.movieInfo}>
                   <Typography
                     variant="h4"
@@ -222,14 +293,28 @@ function BookingDetail(props) {
                 </Box>
               </Grid>
               <Grid xs={2} item>
-                <Box>
-                  <CircularProgress variant="determine" />
+                <Box className={classes.circleBox}>
+                  <CircularProgress
+                    variant="determine"
+                    thickness={3}
+                    className={classes.circleFull}
+                  />
                   <CircularProgress
                     variant="determinate"
                     color="secondary"
-                    value={75}
+                    value={50}
+                    thickness={3}
+                    className={classes.circlePercent}
                   />
+                  <Typography
+                    varirant="h1"
+                    component="p"
+                    className={classes.textPercent}
+                  >
+                    {chiTietPhim.danhGia}
+                  </Typography>
                 </Box>
+                <Box className={classes.starMain}>{renderStar()}</Box>
               </Grid>
             </Grid>
           </Container>
