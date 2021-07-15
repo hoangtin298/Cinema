@@ -82,6 +82,8 @@ const useStyles = makeStyles((theme) => ({
     minWidth: "100%",
     padding: "20px 15px 15px 20px",
 
+    opacity: 0.5,
+
     transition: "all .2s",
     "&:hover": {
       opacity: 1,

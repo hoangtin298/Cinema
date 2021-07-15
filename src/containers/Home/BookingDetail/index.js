@@ -15,8 +15,13 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
 import StarIcon from "@material-ui/icons/Star";
 import StarHalfIcon from "@material-ui/icons/StarHalf";
+import BookingDetailTabs from "./BookingDetailTabs";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    background: "rgb(10, 32, 41)",
+  },
+
   //   TOP
   detailMainTop: {
     position: "relative",
@@ -178,6 +183,12 @@ const useStyles = makeStyles((theme) => ({
     display: "inline-block",
     maxWidth: "25px",
   },
+
+  textDanhGia: {
+    textAlign: "center",
+    color: theme.palette.common.white,
+    marginTop: "10px",
+  },
 }));
 
 function BookingDetail(props) {
@@ -221,104 +232,114 @@ function BookingDetail(props) {
   };
 
   return (
-    <section>
+    <section className={classes.root}>
       {chiTietPhim ? (
-        <div className={classes.detailMainTop}>
-          <ModalPlayer
-            open={openModal}
-            trailer={chiTietPhim.trailer}
-            handleClose={() => setOpenModal(false)}
-          />
-          <div className={classes.styleBlur}>
-            <img
-              alt="back-app"
-              src={BackAppDetail}
-              className={classes.posterLandscapeFilm}
+        <>
+          <div className={classes.detailMainTop}>
+            <ModalPlayer
+              open={openModal}
+              trailer={chiTietPhim.trailer}
+              handleClose={() => setOpenModal(false)}
             />
-          </div>
-          <div className={classes.styleGradient}></div>
-          <Container maxWidth="md" className={classes.detailMainInfo}>
-            <Grid container alignItems="center">
-              <Grid xs={3} item>
-                <Box
-                  style={{
-                    background: `url(${chiTietPhim.hinhAnh})`,
-                  }}
-                  className={classes.posterMain}
-                >
-                  <button
-                    onClick={(event) => {
-                      event.preventDefault();
-                      setOpenModal(true);
+            <div className={classes.styleBlur}>
+              <img
+                alt="back-app"
+                src={BackAppDetail}
+                className={classes.posterLandscapeFilm}
+              />
+            </div>
+            <div className={classes.styleGradient}></div>
+            <Container maxWidth="md" className={classes.detailMainInfo}>
+              <Grid container alignItems="center">
+                <Grid xs={3} item>
+                  <Box
+                    style={{
+                      background: `url(${chiTietPhim.hinhAnh})`,
                     }}
-                    className={classes.playerButton}
+                    className={classes.posterMain}
                   >
-                    <img alt="play-btn" src={PlayButton} />
-                  </button>
-                </Box>
-              </Grid>
-              <Grid xs={7} item>
-                <Box className={classes.movieInfo}>
-                  <Typography
-                    variant="h4"
-                    component="p"
-                    className={classes.movieDate}
-                  >
-                    {moment(chiTietPhim.ngayKhoiChieu).format("DD.MM.YYYY")}
-                  </Typography>
-                  <Box className={classes.movieMain}>
-                    <span className={classes.movieAge}>C16</span>
-                    <Typography
-                      variant="h1"
-                      component="p"
-                      className={classes.movieName}
+                    <button
+                      onClick={(event) => {
+                        event.preventDefault();
+                        setOpenModal(true);
+                      }}
+                      className={classes.playerButton}
                     >
-                      {chiTietPhim.tenPhim}
+                      <img alt="play-btn" src={PlayButton} />
+                    </button>
+                  </Box>
+                </Grid>
+                <Grid xs={7} item>
+                  <Box className={classes.movieInfo}>
+                    <Typography
+                      variant="h4"
+                      component="p"
+                      className={classes.movieDate}
+                    >
+                      {moment(chiTietPhim.ngayKhoiChieu).format("DD.MM.YYYY")}
+                    </Typography>
+                    <Box className={classes.movieMain}>
+                      <span className={classes.movieAge}>C16</span>
+                      <Typography
+                        variant="h1"
+                        component="p"
+                        className={classes.movieName}
+                      >
+                        {chiTietPhim.tenPhim}
+                      </Typography>
+                    </Box>
+                    <Typography
+                      variant="h4"
+                      component="p"
+                      className={classes.movieDesc}
+                    >
+                      129 phút - 0 IMDb - 2D/Digital
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.movieButton}
+                    >
+                      Mua vé
+                    </Button>
+                  </Box>
+                </Grid>
+                <Grid xs={2} item>
+                  <Box className={classes.circleBox}>
+                    <CircularProgress
+                      variant="determinate"
+                      thickness={3}
+                      className={classes.circleFull}
+                    />
+                    <CircularProgress
+                      variant="determinate"
+                      color="secondary"
+                      value={50}
+                      thickness={3}
+                      className={classes.circlePercent}
+                    />
+                    <Typography
+                      varirant="h1"
+                      component="p"
+                      className={classes.textPercent}
+                    >
+                      {chiTietPhim.danhGia}
                     </Typography>
                   </Box>
+                  <Box className={classes.starMain}>{renderStar()}</Box>
                   <Typography
                     variant="h4"
                     component="p"
-                    className={classes.movieDesc}
+                    className={classes.textDanhGia}
                   >
-                    129 phút - 0 IMDb - 2D/Digital
+                    29 người đánh giá
                   </Typography>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.movieButton}
-                  >
-                    Mua vé
-                  </Button>
-                </Box>
+                </Grid>
               </Grid>
-              <Grid xs={2} item>
-                <Box className={classes.circleBox}>
-                  <CircularProgress
-                    variant="determine"
-                    thickness={3}
-                    className={classes.circleFull}
-                  />
-                  <CircularProgress
-                    variant="determinate"
-                    color="secondary"
-                    value={50}
-                    thickness={3}
-                    className={classes.circlePercent}
-                  />
-                  <Typography
-                    varirant="h1"
-                    component="p"
-                    className={classes.textPercent}
-                  >
-                    {chiTietPhim.danhGia}
-                  </Typography>
-                </Box>
-                <Box className={classes.starMain}>{renderStar()}</Box>
-              </Grid>
-            </Grid>
-          </Container>
-        </div>
+            </Container>
+          </div>
+          <BookingDetailTabs data={chiTietPhim} />
+        </>
       ) : null}
     </section>
   );

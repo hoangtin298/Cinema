@@ -82,6 +82,7 @@ function TopBarHomeMiddle(props) {
   };
 
   const handleClick = (id) => {
+    // push to homepage then scroll
     if (location.pathname !== "/") {
       historyCallback(() => {
         scroller.scrollTo(`${id}`, {
@@ -94,6 +95,7 @@ function TopBarHomeMiddle(props) {
       });
       return;
     }
+    // scroll in homepage
     scroller.scrollTo(`${id}`, {
       duration: 1000,
       delay: 0,
