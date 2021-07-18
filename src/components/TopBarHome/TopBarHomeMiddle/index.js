@@ -75,18 +75,18 @@ function TopBarHomeMiddle(props) {
   });
 
   const historyCallback = (callback) => {
-    history.push("/");
+    history.push("/home");
     setTimeout(function () {
       callback();
-    }, 1000);
+    }, 800);
   };
 
   const handleClick = (id) => {
     // push to homepage then scroll
-    if (location.pathname !== "/") {
+    if (location.pathname !== "/" && location.pathname !== "/home") {
       historyCallback(() => {
         scroller.scrollTo(`${id}`, {
-          duration: 1000,
+          duration: 800,
           delay: 0,
           smooth: true,
           spy: true,
@@ -97,7 +97,7 @@ function TopBarHomeMiddle(props) {
     }
     // scroll in homepage
     scroller.scrollTo(`${id}`, {
-      duration: 1000,
+      duration: 800,
       delay: 0,
       smooth: true,
       spy: true,

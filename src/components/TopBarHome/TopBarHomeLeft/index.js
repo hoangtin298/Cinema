@@ -30,7 +30,7 @@ function TopBarHomeLeft(props) {
   const history = useHistory();
 
   const historyCallback = (callback) => {
-    history.push("/");
+    history.push("/home");
     callback();
   };
 
@@ -39,7 +39,7 @@ function TopBarHomeLeft(props) {
       <a
         className={classes.logoLink}
         onClick={() => {
-          if (location.pathname !== "/") {
+          if (location.pathname !== "/" && location.pathname !== "/home") {
             historyCallback(() => {
               scroll.scrollToTop();
             });
