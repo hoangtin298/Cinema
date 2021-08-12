@@ -171,6 +171,7 @@ const useStyles = makeStyles((theme) => ({
   },
   ageType: {
     display: "inline-block",
+    backgroundColor: theme.palette.primary.main,
 
     borderRadius: "4px",
     minWidth: "33px",
@@ -181,12 +182,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "15px",
     color: theme.palette.common.white,
     textAlign: "center",
-  },
-  ageType16: {
-    backgroundColor: theme.palette.primary.main,
-  },
-  ageTypeP: {
-    backgroundColor: theme.palette.secondary.main,
   },
   infoDesc: {
     fontSize: "13px",
@@ -330,13 +325,7 @@ function MovieSingle(props) {
 
       <div className={classes.info}>
         <div className={classes.infoName}>
-          <span
-            className={`${classes.ageType} ${
-              data.maPhim % 2 === 0 ? classes.ageType16 : classes.ageTypeP
-            } `}
-          >
-            {data.maPhim % 2 === 0 ? "C16" : "P"}
-          </span>
+          <span className={classes.ageType}>C16</span>
           {data.tenPhim}
         </div>
         <div className={classes.infoDesc}>

@@ -211,8 +211,6 @@ function BookingDetail(props) {
       });
   }, []);
 
-  console.log("chiTietPhim", chiTietPhim);
-
   const starFloor = Math.floor(chiTietPhim?.danhGia / 2);
   const starHalf = chiTietPhim?.danhGia % 2 !== 0;
 

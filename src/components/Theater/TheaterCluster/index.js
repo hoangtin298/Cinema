@@ -44,12 +44,6 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-const StyledAccordion = withStyles({
-  expanded: {
-    margin: "0 !important",
-  },
-})(Accordion);
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -290,6 +284,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const StyledAccordion = withStyles({
+  expanded: {
+    margin: "0 !important",
+  },
+})(Accordion);
+
 function TheaterCluster(props) {
   const classes = useStyles();
   const { valueCluster: value, setValueCluster: setValue } = props;
@@ -419,9 +419,8 @@ function TheaterCluster(props) {
                       </Typography>
                       <div className={classes.dateTimeWrapper}>
                         {item.lstLichChieuTheoPhim &&
-                          item.lstLichChieuTheoPhim
-                            .slice(0, 14)
-                            .map((childItem, childIndex) => {
+                          item.lstLichChieuTheoPhim.map(
+                            (childItem, childIndex) => {
                               return (
                                 <Link
                                   to="/"
@@ -447,7 +446,8 @@ function TheaterCluster(props) {
                                   </div>
                                 </Link>
                               );
-                            })}
+                            }
+                          )}
                       </div>
                     </div>
                   </AccordionDetails>

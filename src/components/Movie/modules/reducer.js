@@ -6,7 +6,7 @@ const initialState = {
   error: null,
 };
 
-export const movieListReducer = (state = initialState, { type, payload }) => {
+export const movieListReducer = (state = initialState, { type, payload,...action }) => {
   switch (type) {
     case actionTypes.GET_MOVIE_LIST_REQUEST:
       state.loading = true;

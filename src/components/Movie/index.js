@@ -10,7 +10,6 @@ import Grid from "@material-ui/core/Grid";
 import MovieSingle from "./MovieSingle";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Slider from "react-slick";
 import styled from "styled-components";
@@ -86,10 +85,18 @@ const StyledSlider = styled(Slider)`
    {
     // Arrow Position //
     .slick-prev {
-      left: -22px !important;
+      left: -60px !important;
     }
     .slick-next {
-      right: -22px !important;
+      right: -60px !important;
+    }
+    @media screen and (max-width: 1050px) {
+      .slick-prev {
+        left: -30px !important;
+      }
+      .slick-next {
+        right: -30px !important;
+      }
     }
     @media screen and (max-width: 992px) {
       .slick-prev {
@@ -182,6 +189,8 @@ function Movie(props) {
   useEffect(() => {
     dispatch(actGetMovieListApi("01/01/2020", "31/12/2020"));
   }, []);
+
+
 
   const settings = {
     dots: false,

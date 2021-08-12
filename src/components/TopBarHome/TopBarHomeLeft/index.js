@@ -48,7 +48,7 @@ function TopBarHomeLeft(props) {
           scroll.scrollToTop();
         }}
       >
-        <img src={Logo} alt="logo" className={classes.logoImg} />
+        <img src={Logo} alt="logo" title="logo" className={classes.logoImg} />
       </a>
     </>
   );

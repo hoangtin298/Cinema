@@ -59,8 +59,6 @@ function BookingDetailTabs(props) {
     setValue(newValue);
   };
 
-  console.log("data", data);
-
   return (
     <Container maxWidth="md">
       <Tabs

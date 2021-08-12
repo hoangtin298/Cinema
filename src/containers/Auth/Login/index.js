@@ -126,15 +126,6 @@ export default function LogIn() {
   const classes = useStyles();
   const history = useHistory();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    mode: "onBlur",
-    resolver: yupResolver(schema),
-  });
-
   const [loginError, setLoginError] = useState(null);
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -149,6 +140,15 @@ export default function LogIn() {
       setUser(JSON.parse(localStorage.getItem("nhoTaiKhoan")));
     }
   }, []);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
+    resolver: yupResolver(schema),
+  });
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -211,7 +211,7 @@ export default function LogIn() {
           </Typography>
           <form
             className={classes.form}
-            onSubmit={handleSubmit(onSubmit)}
+            // onSubmit={handleSubmit(onSubmit)}
             noValidate
           >
             <StyledTextField
@@ -295,6 +295,10 @@ export default function LogIn() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={(event) => {
+                event.preventDefault();
+                onSubmit(user);
+              }}
             >
               Đăng Nhập
             </Button>
